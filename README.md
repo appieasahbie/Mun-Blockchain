@@ -72,24 +72,29 @@ https://twitter.com/munblockchain
        go mod tidy
        make install
        clear
-       mkdir -p ~/.mun/upgrade_manager/upgrades
-       mkdir -p ~/.mun/upgrade_manager/genesis/bin
+       mkdir -p          ~/.mun/upgrade_manager/upgrades
+       mkdir -p  ~/.mun/upgrade_manager/genesis/bin
        
 +Symlink genesis binary to upgrade 
 
-       cp $(which mund) ~/.mun/upgrade_manager/genesis/bin
-       sudo cp $(which mund-manager) /usr/bin
+        cp $(which mund)     ~/.mun/upgrade_manager/genesis/bin
+        sudo cp $(which mund-manager) /usr/bin
+        
        
  6-𝐈𝐧𝐢𝐭𝐢𝐚𝐥𝐢𝐳𝐞 𝐭𝐡𝐞 𝐯𝐚𝐥𝐢𝐝𝐚𝐭𝐨𝐫
     (init)
     
+    
        mund init xxxxxxxxx --chain-id testmun
+       
        
   + Replace xxxxxx with your moniker name must be three words like moon-moon-moon
   
  7-𝐂𝐫𝐞𝐚𝐭𝐞 𝐚 𝐰𝐚𝐥𝐥𝐞𝐭 (wallet name can be just one word not like your moniker)
+ 
   
-       mund keys add yyyyyyyy --keyring-backend test
+        mund keys add yyyyyyyy --keyring-backend test
+       
  
  + Replace yyyyyyyyy with your wallet name like moon
  + Save all information in a notepad
@@ -98,30 +103,41 @@ https://twitter.com/munblockchain
 
    + Fetch genesis.json from genesis node: :
     
-        curl --tlsv1 https://node1.mun.money/genesis? | jq ".result.genesis" > ~/.mun/config/genesis.json
+    
+         curl --tlsv1   https://node1.mun.money/genesis? | jq ".result.genesis" > ~/.mun/config/genesis.json
+        
         
    + Update seed in config.toml to make p2p connection:
+   
 
-        nano ~/.mun/config/config.toml  
+          nano ~/.mun/config/config.toml 
+        
         
    + Go to the P2P section and fill in the seed with the information below 
     
-        "6a08f2f76baed249d3e3c666aaef5884e4b1005c@167.71.0.38:26656"
+            "6a08f2f76baed249d3e3c666aaef5884e4b1005c@167.71.0.38:26656"
+        
         
    (to save click Ctrl X and than Y enter)
    
 
    + Replace stake to TMUN:
 
+
         sed -i 's/stake/utmun/g' ~/.mun/config/genesis.json
+
 
 9-𝐂𝐫𝐞𝐚𝐭𝐞 𝐚𝐧𝐝 𝐬𝐞𝐭 𝐭𝐡𝐞 𝐬𝐞𝐫𝐯𝐢𝐜𝐞 𝐟𝐢𝐥𝐞
 
    + Create the service file:
 
+
        sudo nano /etc/systemd/system/mund.service
        
+       
     (and past the info bellow)   
+    
+    
     
        [Unit]
        Description=mund
@@ -151,22 +167,30 @@ https://twitter.com/munblockchain
 
 10-𝐂𝐫𝐞𝐚𝐭𝐞 𝐥𝐨𝐠 𝐟𝐢𝐥𝐞𝐬 𝐚𝐧𝐝 𝐬𝐭𝐚𝐫𝐭𝐬 𝐫𝐮𝐧𝐧𝐢𝐧𝐠 𝐭𝐡𝐞 𝐧𝐨𝐝𝐞
 
+
         make log-files
+        
         
         sudo systemctl enable mund
         
+        
         sudo systemctl start mund
+        
         
      (Press CTRL+C)
           
 + Verify node is running properly:
  
+ 
         mund status
+        
         
    (after catching up the block ask on discord the admin alex to get the tokens to become a validator )
    
    
 11-𝐁𝐞𝐜𝐨𝐦𝐞 𝐕𝐚𝐥𝐢𝐝𝐚𝐭𝐨𝐫
+ 
+ 
  
         mund tx staking create-validator --from yyyyyyyy --moniker xxxxxxxx --pubkey $(mund tendermint show-validator) --chain-id testmun --keyring-backend test --amount 50000000000utmun --commission-max-change-rate 0.01 --commission-max-rate 0.2 --commission-rate 0.1 --min-self-delegation 1 --fees 200000utmun --gas auto --gas=auto --gas-adjustment=1.5 -y
    
