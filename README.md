@@ -124,7 +124,7 @@ https://twitter.com/munblockchain
    + Replace stake to TMUN:
 
 
-        sed -i 's/stake/utmun/g' ~/.mun/config/genesis.json
+             sed -i 's/stake/utmun/g' ~/.mun/config/genesis.json
 
 
 9-𝐂𝐫𝐞𝐚𝐭𝐞 𝐚𝐧𝐝 𝐬𝐞𝐭 𝐭𝐡𝐞 𝐬𝐞𝐫𝐯𝐢𝐜𝐞 𝐟𝐢𝐥𝐞
@@ -132,7 +132,7 @@ https://twitter.com/munblockchain
    + Create the service file:
 
 
-       sudo nano /etc/systemd/system/mund.service
+              sudo nano /etc/systemd/system/mund.service
        
        
     (and past the info bellow)   
